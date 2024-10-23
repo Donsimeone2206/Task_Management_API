@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        pre {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            overflow-x: auto;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .response {
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
+            margin: 10px 0;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Management API</h1>
+    <p>The Task Management API allows users to manage tasks, categories, and user accounts with functionalities including creating, reading, updating, deleting tasks, user authentication, and password management.</p>
+
+    <h2>Base URL</h2>
+    <pre>http://127.0.0.1:8000/api/</pre>
+
+    <h2>Authentication</h2>
+    <p>This API uses token-based authentication. Users must log in to receive a token, which must be included in the headers of subsequent requests.</p>
+
+    <h3>Login</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/login/</pre></li>
+        <li><strong>Method:</strong> <pre>POST</pre></li>
+        <li><strong>Request Body:</strong>
+            <pre>
+{
+    "username": "user@example.com",
+    "password": "your_password"
+}
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+{
+    "token": "your_token_here"
+}
+                </pre>
+            </div>
+        </li>
+    </ul>
+
+    <h3>Register</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/register/</pre></li>
+        <li><strong>Method:</strong> <pre>POST</pre></li>
+        <li><strong>Request Body:</strong>
+            <pre>
+{
+    "username": "new_user",
+    "email": "user@example.com",
+    "password": "your_password"
+}
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+{
+    "id": 1,
+    "username": "new_user",
+    "email": "user@example.com"
+}
+                </pre>
+            </div>
+        </li>
+    </ul>
+
+    <h3>Logout</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/logout/</pre></li>
+        <li><strong>Method:</strong> <pre>POST</pre></li>
+        <li><strong>Headers:</strong>
+            <pre>
+Authorization: Token your_token_here
+            </pre>
+        </li>
+        <li><strong>Response:</strong> <pre>204 No Content</pre></li>
+    </ul>
+
+    <h3>Password Reset Request</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/reset-password/</pre></li>
+        <li><strong>Method:</strong> <pre>POST</pre></li>
+        <li><strong>Request Body:</strong>
+            <pre>
+{
+    "email": "user@example.com"
+}
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+{
+    "message": "If an account with that email exists, a password reset link has been sent."
+}
+                </pre>
+            </div>
+        </li>
+    </ul>
+
+    <h3>Password Reset Confirmation</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/reset-password/{user_id}/{token}/</pre></li>
+        <li><strong>Method:</strong> <pre>POST</pre></li>
+        <li><strong>Request Body:</strong>
+            <pre>
+{
+    "password": "new_password"
+}
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+{
+    "message": "Password has been reset."
+}
+                </pre>
+            </div>
+        </li>
+    </ul>
+
+    <h2>Task Management Endpoints</h2>
+
+    <h3>List All Tasks</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/tasks/</pre></li>
+        <li><strong>Method:</strong> <pre>GET</pre></li>
+        <li><strong>Headers:</strong>
+            <pre>
+Authorization: Token your_token_here
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+[
+    {
+        "id": 1,
+        "title": "Task 1",
+        "description": "Description for Task 1",
+        "due_date": "2024-09-30T00:00:00Z",
+        "priority": "High",
+        "status": "Pending",
+        "category": null,
+        "recurrence": "None"
+    }
+]
+                </pre>
+            </div>
+        </li>
+    </ul>
+
+    <h3>Create a New Task</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/tasks/</pre></li>
+        <li><strong>Method:</strong> <pre>POST</pre></li>
+        <li><strong>Headers:</strong>
+            <pre>
+Authorization: Token your_token_here
+            </pre>
+        </li>
+        <li><strong>Request Body:</strong>
+            <pre>
+{
+    "title": "New Task",
+    "description": "Description for New Task",
+    "due_date": "2024-09-30T00:00:00Z",
+    "priority": "Medium",
+    "status": "Pending",
+    "category": null,
+    "recurrence": "None"
+}
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+{
+    "id": 2,
+    "title": "New Task",
+    "description": "Description for New Task",
+    "due_date": "2024-09-30T00:00:00Z",
+    "priority": "Medium",
+    "status": "Pending",
+    "category": null,
+    "recurrence": "None"
+}
+                </pre>
+            </div>
+        </li>
+    </ul>
+
+    <h3>Retrieve a Specific Task</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/tasks/{id}/</pre></li>
+        <li><strong>Method:</strong> <pre>GET</pre></li>
+        <li><strong>Headers:</strong>
+            <pre>
+Authorization: Token your_token_here
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+{
+    "id": 1,
+    "title": "Task 1",
+    "description": "Description for Task 1",
+    "due_date": "2024-09-30T00:00:00Z",
+    "priority": "High",
+    "status": "Pending",
+    "category": null,
+    "recurrence": "None"
+}
+                </pre>
+            </div>
+        </li>
+    </ul>
+
+    <h3>Update a Specific Task</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/tasks/{id}/</pre></li>
+        <li><strong>Method:</strong> <pre>PUT</pre></li>
+        <li><strong>Headers:</strong>
+            <pre>
+Authorization: Token your_token_here
+            </pre>
+        </li>
+        <li><strong>Request Body:</strong>
+            <pre>
+{
+    "title": "Updated Task",
+    "description": "Updated description",
+    "due_date": "2024-10-01T00:00:00Z",
+    "priority": "Low",
+    "status": "Pending",
+    "category": null,
+    "recurrence": "None"
+}
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+{
+    "id": 1,
+    "title": "Updated Task",
+    "description": "Updated description",
+    "due_date": "2024-10-01T00:00:00Z",
+    "priority": "Low",
+    "status": "Pending",
+    "category": null,
+    "recurrence": "None"
+}
+                </pre>
+            </div>
+        </li>
+    </ul>
+
+    <h3>Delete a Specific Task</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/tasks/{id}/</pre></li>
+        <li><strong>Method:</strong> <pre>DELETE</pre></li>
+        <li><strong>Headers:</strong>
+            <pre>
+Authorization: Token your_token_here
+            </pre>
+        </li>
+        <li><strong>Response:</strong> <pre>204 No Content</pre></li>
+    </ul>
+
+    <h3>Mark a Task as Complete</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/tasks/{id}/complete/</pre></li>
+        <li><strong>Method:</strong> <pre>POST</pre></li>
+        <li><strong>Headers:</strong>
+            <pre>
+Authorization: Token your_token_here
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+{
+    "status": "task marked as complete"
+}
+                </pre>
+            </div>
+        </li>
+    </ul>
+
+    <h3>Mark a Task as Incomplete</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/tasks/{id}/incomplete/</pre></li>
+        <li><strong>Method:</strong> <pre>POST</pre></li>
+        <li><strong>Headers:</strong>
+            <pre>
+Authorization: Token your_token_here
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+{
+    "status": "task marked as incomplete"
+}
+                </pre>
+            </div>
+        </li>
+    </ul>
+
+    <h2>Category Management Endpoints</h2>
+
+    <h3>List All Categories</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/categories/</pre></li>
+        <li><strong>Method:</strong> <pre>GET</pre></li>
+        <li><strong>Headers:</strong>
+            <pre>
+Authorization: Token your_token_here
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+[
+    {
+        "id": 1,
+        "name": "Work"
+    }
+]
+                </pre>
+            </div>
+        </li>
+    </ul>
+
+    <h3>Create a New Category</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/categories/</pre></li>
+        <li><strong>Method:</strong> <pre>POST</pre></li>
+        <li><strong>Headers:</strong>
+            <pre>
+Authorization: Token your_token_here
+            </pre>
+        </li>
+        <li><strong>Request Body:</strong>
+            <pre>
+{
+    "name": "Personal"
+}
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+{
+    "id": 2,
+    "name": "Personal"
+}
+                </pre>
+            </div>
+        </li>
+    </ul>
+
+    <h3>Retrieve a Specific Category</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/categories/{id}/</pre></li>
+        <li><strong>Method:</strong> <pre>GET</pre></li>
+        <li><strong>Headers:</strong>
+            <pre>
+Authorization: Token your_token_here
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+{
+    "id": 1,
+    "name": "Work"
+}
+                </pre>
+            </div>
+        </li>
+    </ul>
+
+    <h3>Update a Specific Category</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/categories/{id}/</pre></li>
+        <li><strong>Method:</strong> <pre>PUT</pre></li>
+        <li><strong>Headers:</strong>
+            <pre>
+Authorization: Token your_token_here
+            </pre>
+        </li>
+        <li><strong>Request Body:</strong>
+            <pre>
+{
+    "name": "Updated Category"
+}
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+{
+    "id": 1,
+    "name": "Updated Category"
+}
+                </pre>
+            </div>
+        </li>
+    </ul>
+
+    <h3>Delete a Specific Category</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/categories/{id}/</pre></li>
+        <li><strong>Method:</strong> <pre>DELETE</pre></li>
+        <li><strong>Headers:</strong>
+            <pre>
+Authorization: Token your_token_here
+            </pre>
+        </li>
+        <li><strong>Response:</strong> <pre>204 No Content</pre></li>
+    </ul>
+
+    <h2>Task History Endpoints</h2>
+
+    <h3>List Task History</h3>
+    <ul>
+        <li><strong>Endpoint:</strong> <pre>/history/</pre></li>
+        <li><strong>Method:</strong> <pre>GET</pre></li>
+        <li><strong>Headers:</strong>
+            <pre>
+Authorization: Token your_token_here
+            </pre>
+        </li>
+        <li><strong>Response:</strong>
+            <div class="response">
+                <pre>
+[
+    {
+        "id": 1,
+        "task": 1,
+        "status": "Completed",
+        "changed_at": "2024-09-20T00:00:00Z"
+    }
+]
+                </pre>
+            </div>
+        </li>
+    </ul>
+</body>
+</html>
