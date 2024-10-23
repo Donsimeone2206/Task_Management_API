@@ -13,13 +13,13 @@ This API uses token-based authentication. Users must log in to receive a token, 
 - **Endpoint**: `/login/`
 - **Method**: `POST`
 - **Request Body**:
-  ```json
+  ``````json
   {
       "username": "user@example.com",
       "password": "your_password"
   }
 Response:
-json
+```json
 {
     "token": "your_token_here"
 }
@@ -27,14 +27,14 @@ Register
 Endpoint: /register/
 Method: POST
 Request Body:
-json
+```json
 {
     "username": "new_user",
     "email": "user@example.com",
     "password": "your_password"
 }
 Response:
-json
+```json
 {
     "id": 1,
     "username": "new_user",
@@ -50,12 +50,12 @@ Password Reset Request
 Endpoint: /reset-password/
 Method: POST
 Request Body:
-json
+```json
 {
     "email": "user@example.com"
 }
 Response:
-json
+```json
 {
     "message": "If an account with that email exists, a password reset link has been sent."
 }
@@ -63,12 +63,12 @@ Password Reset Confirmation
 Endpoint: /reset-password/{user_id}/{token}/
 Method: POST
 Request Body:
-json
+```json
 {
     "password": "new_password"
 }
 Response:
-json
+```json
 {
     "message": "Password has been reset."
 }
@@ -79,7 +79,7 @@ Method: GET
 Headers:
 Authorization: Token your_token_here
 Response:
-json
+```json
 [
     {
         "id": 1,
@@ -98,7 +98,7 @@ Method: POST
 Headers:
 Authorization: Token your_token_here
 Request Body:
-json
+```json
 {
     "title": "New Task",
     "description": "Description for New Task",
@@ -109,7 +109,7 @@ json
     "recurrence": "None"
 }
 Response:
-json
+```json
 {
     "id": 2,
     "title": "New Task",
@@ -126,7 +126,7 @@ Method: GET
 Headers:
 Authorization: Token your_token_here
 Response:
-json
+```json
 {
     "id": 1,
     "title": "Task 1",
@@ -143,7 +143,7 @@ Method: PUT
 Headers:
 Authorization: Token your_token_here
 Request Body:
-json
+```json
 {
     "title": "Updated Task",
     "description": "Updated description",
@@ -154,7 +154,7 @@ json
     "recurrence": "None"
 }
 Response:
-json
+```json
 {
     "id": 1,
     "title": "Updated Task",
@@ -177,7 +177,7 @@ Method: POST
 Headers:
 Authorization: Token your_token_here
 Response:
-json
+```json
 {
     "status": "task marked as complete"
 }
@@ -187,7 +187,7 @@ Method: POST
 Headers:
 Authorization: Token your_token_here
 Response:
-json
+```json
 {
     "status": "task marked as incomplete"
 }
@@ -210,12 +210,12 @@ Method: POST
 Headers:
 Authorization: Token your_token_here
 Request Body:
-json
+```json
 {
     "name": "Personal"
 }
 Response:
-json
+```json
 {
     "id": 2,
     "name": "Personal"
@@ -226,7 +226,7 @@ Method: GET
 Headers:
 Authorization: Token your_token_here
 Response:
-json
+```json
 {
     "id": 1,
     "name": "Work"
@@ -237,12 +237,12 @@ Method: PUT
 Headers:
 Authorization: Token your_token_here
 Request Body:
-json
+```json
 {
     "name": "Updated Category"
 }
 Response:
-json
+```json
 {
     "id": 1,
     "name": "Updated Category"
@@ -260,7 +260,7 @@ Method: GET
 Headers:
 Authorization: Token your_token_here
 Response:
-json
+```json
 [
     {
         "id": 1,
